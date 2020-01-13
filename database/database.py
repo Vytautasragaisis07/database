@@ -93,5 +93,76 @@ def exercise_10():
     query = "SELECT AVG(salary), job_id FROM employees WHERE job_id NOT LIKE 'IT%'"
     db_query(query)
 
-exercise_10()
+#exercise_10()
 
+def create_view():
+    query = """CREATE VIEW IF NOT EXISTS names
+            as
+            SELECT
+                first_name,
+                last_name
+            FROM employees"""
+    query_database(query)
+    query_database("SELECT * FROM names")
+
+
+# create_view()
+
+def get_all():
+    query = "SELECT * FROM employees"
+    db_query(query)
+
+
+def get_3_1():
+    query = """SELECT first_name, last_name, salary  FROM employees
+    WHERE salary > (SELECT salary FROM employees WHERE last_name="Bull")"""
+    db_query(query)
+
+
+def get_3_2():
+    query = """SELECT first_name, last_name, job_id, manager_id  FROM employees
+    WHERE employee_id IN (SELECT manager_id FROM employees)"""
+    db_query(query)
+
+
+def get_3_3():
+    query = """SELECT first_name, last_name, salary FROM employees
+    WHERE salary > (SELECT AVG(salary) FROM employees)"""
+    db_query(query)
+
+
+def get_3_4():
+    query = """SELECT first_name, job_id, last_name, salary 
+        FROM employees
+        WHERE salary = (SELECT min_salary FROM jobs WHERE employees.job_id = jobs.job_id)"""
+    db_query(query)
+
+
+def get_3_5():
+    query = """SELECT first_name, last_name, salary FROM employees
+        WHERE department_id IN (SELECT department_id FROM departments WHEREdepartment_name LIKE "IT%")"""
+    db_query(query)
+
+def get_3_6():
+    query = """SELECT salary FROM employees
+        WHERE salary IN (SELECT salary FROM employees ORDER BY salary DESC LIMIT 3)"""
+    db_query(query)
+
+def get_3_7():
+    query = """SELECT first_name, last_name FROM employees
+        WHERE salary IN (SELECT salary FROM employees ORDER BY salary DESC LIMIT 3)"""
+    db_query(query)
+
+def get_3_8():
+    query = """SELECT * FROM locations"""
+    db_query(query)
+
+# get_3_2()
+# get_all()
+# get_3_1()
+# get_3_3()
+# get_3_4()
+get_3_5()
+# get_3_6()
+#get_3_7()
+#get_3_8()
